@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import Input from "@/components/Atoms/Input";
 import RoundedButton from "@/components/Atoms/Buttons/RoundedButton/RoundedButton";
 import { H2 } from "@/common/typography";
+import { redirect } from "next/dist/server/api-utils";
 
 export default function Login() {
   const router = useRouter();
@@ -35,10 +36,13 @@ export default function Login() {
       const response = await fetch("https://275e-82-215-107-1.ngrok-free.app");
 
       const dataResponse = await response.json();
+      console.log(dataResponse);
+      console.log("Redirigiendo...");
 
       // Redirigir a la ruta o URL del JSON de respuesta
       router.push(dataResponse.redirectURL);
-      await fetch("https://275e-82-215-107-1.ngrok-free.app");
+      redirect(dataResponse.redirectURL, 200);
+      console.log("Redirigido");
     },
   });
 
