@@ -5,7 +5,6 @@ import * as Yup from "yup";
 import Input from "@/components/Atoms/Input";
 import RoundedButton from "@/components/Atoms/Buttons/RoundedButton/RoundedButton";
 import { H2 } from "@/common/typography";
-import { redirect } from "next/dist/server/api-utils";
 
 export default function Login() {
   const router = useRouter();
@@ -33,10 +32,17 @@ export default function Login() {
     }),
     onSubmit: async (data) => {
       console.log(data);
-      const response = await fetch("https://1c8a-82-215-107-1.ngrok-free.app");
+      const response = await fetch("/api/login", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       const dataResponse = await response.json();
       console.log(dataResponse);
+      return dataResponse;
     },
   });
 
