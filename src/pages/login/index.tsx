@@ -32,25 +32,14 @@ export default function Login() {
     }),
     onSubmit: async (data) => {
       try {
-        const response = await fetch(
-          "https://1c8a-82-215-107-1.ngrok-free.app",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-          }
-        );
-
-        if (response.ok) {
-          const responseData = await response.json();
-          console.log(responseData);
-          return responseData;
-          // Aquí puedes utilizar los datos de la respuesta JSON según tus necesidades en tu aplicación Next.js
-        } else {
-          console.log("Error en la solicitud");
-        }
+        const response = await fetch("api/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }).then((res) => res.json());
+        console.log(response);
       } catch (error) {
         console.log("Error de conexión", error);
       }

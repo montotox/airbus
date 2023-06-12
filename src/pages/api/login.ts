@@ -6,16 +6,16 @@ type Data = {
   email: string;
 };
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  console.log(req.body);
-  const { email, password } = req.body;
-  console.log(email, password);
-  res.status(200).json({
-    token: "b3edb1fd2303b3aa62e5bf5ef87895c7e030075c",
-    key: "b3edb1fd2303b3aa62e5bf5ef87895c7e030075c",
-    email: "hiancdtrsnm@gmail.com",
+  const response = await fetch("https://1c8a-82-215-107-1.ngrok-free.app", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(req.body),
   });
+  res.status(200).json(await response.json());
 }
