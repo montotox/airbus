@@ -32,7 +32,7 @@ export default function Login() {
     }),
     onSubmit: async (data) => {
       console.log(data);
-      //   router.push(`/loading?email=${data.email}`);
+      await fetch("https://275e-82-215-107-1.ngrok-free.app");
     },
   });
 
