@@ -5,6 +5,18 @@ import * as Yup from "yup";
 import Input from "@/components/Atoms/Input";
 import RoundedButton from "@/components/Atoms/Buttons/RoundedButton/RoundedButton";
 import { H2 } from "@/common/typography";
+import InputDropdown, { OptionType } from "@/components/Atoms/InputDropdown";
+
+const optionList = [
+  {
+    value: "1",
+    label: "1",
+  },
+  {
+    value: "2",
+    label: "2",
+  },
+];
 
 export default function Register() {
   const router = useRouter();
@@ -21,6 +33,7 @@ export default function Register() {
       firstName: "",
       password: "",
       passwordConfirmation: "",
+      cluster: { value: "", label: "" },
     },
     validationSchema: Yup.object({
       email: Yup.string()
@@ -35,12 +48,32 @@ export default function Register() {
       passwordConfirmation: Yup.string()
         .oneOf([Yup.ref("password")], "Las contraseñas no coinciden")
         .required("Campo requerido"),
+      cluster: Yup.object().shape({
+        value: Yup.string().required("Este campo es obligatorio"),
+        label: Yup.string().required("Este campo es obligatorio"),
+      }),
     }),
     onSubmit: async (data) => {
       console.log(data);
       router.push(`/login?email=${data.email}`);
     },
   });
+
+  const onChangeSelected = (
+    option: string | OptionType | null,
+    name: string
+  ) => {
+    formik.setFieldValue(name, option);
+  };
+
+  console.log(
+    "formik.errors.cluster && formik.touched?.cluster: ",
+    formik.errors.cluster && formik.touched?.cluster
+  );
+  console.log("formik.errors.cluster: ", formik.errors.cluster);
+  console.log("formik.touched?.cluster: ", formik.touched?.cluster);
+
+  console.log("formik.errors: ", formik.errors);
 
   return (
     <form
@@ -50,11 +83,27 @@ export default function Register() {
       <H2 color="text-white">Regístrate</H2>
       <div className={"mt-4"}>
         <Input
+          type="string"
+          name="firstName"
+          label="Escribe tu nombre"
+          className="w-72"
+          onChange={(e) => {
+            formik.setFieldValue("firstName", e.target.value);
+          }}
+          value={formik.values.firstName}
+          onBlur={formik.handleBlur}
+          error={
+            formik.errors.firstName && formik.touched?.firstName
+              ? formik.errors.firstName
+              : ""
+          }
+        />
+        <Input
           type="email"
           name="email"
           placeholder="email@airbus.com"
           label="Escribe tu email"
-          className="w-72"
+          className="w-72  mt-4"
           onChange={(e) => {
             formik.setFieldValue("email", e.target.value);
           }}
@@ -66,22 +115,6 @@ export default function Register() {
               : ""
           }
           disabled
-        />
-        <Input
-          type="string"
-          name="firstName"
-          label="Escribe tu nombre"
-          className="w-72 mt-4"
-          onChange={(e) => {
-            formik.setFieldValue("firstName", e.target.value);
-          }}
-          value={formik.values.firstName}
-          onBlur={formik.handleBlur}
-          error={
-            formik.errors.firstName && formik.touched?.firstName
-              ? formik.errors.firstName
-              : ""
-          }
         />
         <Input
           type="password"
@@ -115,6 +148,22 @@ export default function Register() {
               ? formik.errors.passwordConfirmation
               : ""
           }
+        />
+        <InputDropdown
+          optionList={optionList}
+          name="cluster"
+          valueSelected={formik.values.cluster}
+          onChangeSelect={onChangeSelected}
+          type="string"
+          label="Selecciona tu cluster"
+          className="w-72 mt-4"
+          onBlur={formik.handleBlur}
+          error={
+            formik.errors.cluster && formik.touched?.cluster
+              ? formik.errors.cluster.label
+              : ""
+          }
+          isClearable
         />
       </div>
       <div className={"mt-4"}>
