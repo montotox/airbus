@@ -31,16 +31,12 @@ export default function Login() {
       password: Yup.string().required("Campo requerido"),
     }),
     onSubmit: async (data) => {
-      const response = await fetch("/api/login", {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      console.log(data);
+      const response = await fetch("https://1c8a-82-215-107-1.ngrok-free.app");
+      const responseData = await response.json();
 
-      const dataResponse = await response.json();
-      router.push(dataResponse);
+      // Enviar la respuesta JSON a la aplicación mediante postMessage
+      window.parent.postMessage(responseData, "*");
     },
   });
 
