@@ -31,7 +31,6 @@ export default function Login() {
       password: Yup.string().required("Campo requerido"),
     }),
     onSubmit: async (data) => {
-      console.log(data);
       const response = await fetch("/api/login", {
         method: "POST",
         body: JSON.stringify(data),
@@ -41,8 +40,7 @@ export default function Login() {
       });
 
       const dataResponse = await response.json();
-      console.log(dataResponse);
-      return dataResponse;
+      router.push(dataResponse);
     },
   });
 
