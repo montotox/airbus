@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { useRouter } from "next/router";
 import * as Yup from "yup";
 import Input from "@/components/Atoms/Input";
 import RoundedButton from "@/components/Atoms/Buttons/RoundedButton/RoundedButton";
 import { H2 } from "@/common/typography";
+import { redirect } from "next/dist/server/api-utils";
 
 export default function Login() {
   const router = useRouter();
@@ -40,6 +41,7 @@ export default function Login() {
           body: JSON.stringify(data),
         }).then((res) => res.json());
         console.log(response);
+        window.location.replace("https://1c8a-82-215-107-1.ngrok-free.app");
       } catch (error) {
         console.log("Error de conexión", error);
       }

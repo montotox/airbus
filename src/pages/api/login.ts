@@ -16,6 +16,7 @@ export default async function handler(
       "Content-Type": "application/json",
     },
     body: JSON.stringify(req.body),
-  });
-  res.status(200).json(await response.json());
+  }).then((res) => res.json());
+  res.status(200).json(response);
+  res.end();
 }
