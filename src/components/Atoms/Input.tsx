@@ -46,6 +46,7 @@ const Input = ({
     {
       "border-red-100 border-2": !!error,
       "bg-opacity-70": disabled,
+      "text-black bg-white": "dark",
     }
   );
 
@@ -58,9 +59,9 @@ const Input = ({
     "font-normal",
     "focus:outline-none",
     {
+      "text-black bg-white": "dark" && !disabled,
       "bg-transparent": disabled,
       "text-gray-400": disabled,
-      "text-white bg-gray-800": "dark",
     }
   );
 

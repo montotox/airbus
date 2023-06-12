@@ -37,9 +37,6 @@ export default function Login() {
 
       const dataResponse = await response.json();
       console.log(dataResponse);
-      console.log("Redirigiendo...");
-
-      return dataResponse;
     },
   });
 
