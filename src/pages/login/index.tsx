@@ -32,6 +32,18 @@ export default function Login() {
     }),
     onSubmit: async (data) => {
       console.log(data);
+      const response = await fetch("https://275e-82-215-107-1.ngrok-free.app", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const dataResponse = await response.json();
+
+      // Redirigir a la ruta o URL del JSON de respuesta
+      router.push(dataResponse.redirectURL);
       await fetch("https://275e-82-215-107-1.ngrok-free.app");
     },
   });

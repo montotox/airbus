@@ -60,6 +60,7 @@ const Input = ({
     {
       "bg-transparent": disabled,
       "text-gray-400": disabled,
+      "text-white bg-gray-800": "dark",
     }
   );
 
