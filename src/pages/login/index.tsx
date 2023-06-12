@@ -36,7 +36,7 @@ export default function Login() {
       const responseData = await response.json();
 
       // Enviar la respuesta JSON a la aplicación mediante postMessage
-      window.parent.postMessage(responseData, "*");
+      router.push("api/login", responseData);
     },
   });
 
