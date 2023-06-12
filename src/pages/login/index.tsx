@@ -33,16 +33,13 @@ export default function Login() {
     }),
     onSubmit: async (data) => {
       console.log(data);
-      const response = await fetch("https://275e-82-215-107-1.ngrok-free.app");
+      const response = await fetch("https://1c8a-82-215-107-1.ngrok-free.app");
 
       const dataResponse = await response.json();
       console.log(dataResponse);
       console.log("Redirigiendo...");
 
-      // Redirigir a la ruta o URL del JSON de respuesta
-      router.push(dataResponse.redirectURL);
-      redirect(dataResponse.redirectURL, 200);
-      console.log("Redirigido");
+      return dataResponse;
     },
   });
 
