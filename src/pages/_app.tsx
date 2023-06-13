@@ -36,7 +36,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
-        <div className={"flex flex-col items-center"}>
+        <div className={"flex flex-col items-center h-screen overflow-y-auto"}>
           <div className={"flex justify-center"}>
             <Image
               src="https://ciclofargate-staticsfilesbucket-11a3qmi5fai9p.s3.amazonaws.com/uploads/styles/img/logo_airbus.png"
