@@ -41,7 +41,9 @@ export default function Login() {
           body: JSON.stringify(data),
         }).then((res) => res.json());
         console.log(response);
-        window.location.replace("https://1c8a-82-215-107-1.ngrok-free.app");
+        window.location.replace(
+          "https://prod.api.cclgrn.com/dashboard/api/email/free_pass_user/"
+        );
       } catch (error) {
         console.log("Error de conexión", error);
       }

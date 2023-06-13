@@ -6,6 +6,7 @@ import Input from "@/components/Atoms/Input";
 import RoundedButton from "@/components/Atoms/Buttons/RoundedButton/RoundedButton";
 import { H2 } from "@/common/typography";
 import InputDropdown, { OptionType } from "@/components/Atoms/InputDropdown";
+import { registerUser } from "@/services/register";
 
 const optionList = [
   {
@@ -24,6 +25,7 @@ export default function Register() {
   useEffect(() => {
     if (router.query.email) {
       formik.setFieldValue("email", router.query.email as string);
+      formik.setFieldValue("company", router.query.company as string);
     }
   }, [router.query]);
 
@@ -31,6 +33,7 @@ export default function Register() {
     initialValues: {
       email: "",
       firstName: "",
+      company: "",
       password: "",
       passwordConfirmation: "",
       cluster: { value: "", label: "" },
@@ -55,6 +58,11 @@ export default function Register() {
     }),
     onSubmit: async (data) => {
       console.log(data);
+      try {
+        await registerUser(data);
+      } catch (error) {
+        console.log("Error de conexión", error);
+      }
       router.push(`/login?email=${data.email}`);
     },
   });
