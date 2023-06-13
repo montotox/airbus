@@ -35,8 +35,9 @@ export default function Register() {
       firstName: "",
       company: "",
       password: "",
-      passwordConfirmation: "",
       cluster: { value: "", label: "" },
+      terms: false,
+      newsletter: false,
     },
     validationSchema: Yup.object({
       email: Yup.string()
@@ -48,13 +49,14 @@ export default function Register() {
         .required("Campo requerido"),
       firstName: Yup.string().required("Campo requerido"),
       password: Yup.string().required("Campo requerido"),
-      passwordConfirmation: Yup.string()
-        .oneOf([Yup.ref("password")], "Las contraseñas no coinciden")
-        .required("Campo requerido"),
       cluster: Yup.object().shape({
         value: Yup.string().required("Este campo es obligatorio"),
         label: Yup.string().required("Este campo es obligatorio"),
       }),
+      terms: Yup.boolean().oneOf(
+        [true],
+        "Debes aceptar los términos y condiciones"
+      ),
     }),
     onSubmit: async (data) => {
       try {
@@ -81,27 +83,11 @@ export default function Register() {
       <H2 color="text-white">Regístrate</H2>
       <div className={"mt-4"}>
         <Input
-          type="string"
-          name="firstName"
-          label="Escribe tu nombre"
-          className="w-72"
-          onChange={(e) => {
-            formik.setFieldValue("firstName", e.target.value);
-          }}
-          value={formik.values.firstName}
-          onBlur={formik.handleBlur}
-          error={
-            formik.errors.firstName && formik.touched?.firstName
-              ? formik.errors.firstName
-              : ""
-          }
-        />
-        <Input
           type="email"
           name="email"
           placeholder="email@airbus.com"
           label="Escribe tu email"
-          className="w-72  mt-4"
+          className="w-72"
           onChange={(e) => {
             formik.setFieldValue("email", e.target.value);
           }}
@@ -113,6 +99,22 @@ export default function Register() {
               : ""
           }
           disabled
+        />
+        <Input
+          type="string"
+          name="firstName"
+          label="Escribe tu nombre"
+          className="w-72 mt-4"
+          onChange={(e) => {
+            formik.setFieldValue("firstName", e.target.value);
+          }}
+          value={formik.values.firstName}
+          onBlur={formik.handleBlur}
+          error={
+            formik.errors.firstName && formik.touched?.firstName
+              ? formik.errors.firstName
+              : ""
+          }
         />
         <Input
           type="password"
@@ -127,23 +129,6 @@ export default function Register() {
           error={
             formik.errors.password && formik.touched?.password
               ? formik.errors.password
-              : ""
-          }
-        />
-        <Input
-          type="password"
-          name="passwordConfirmation"
-          label="Repite la contraseña"
-          className="w-72 mt-4"
-          onChange={(e) => {
-            formik.setFieldValue("passwordConfirmation", e.target.value);
-          }}
-          value={formik.values.passwordConfirmation}
-          onBlur={formik.handleBlur}
-          error={
-            formik.errors.passwordConfirmation &&
-            formik.touched?.passwordConfirmation
-              ? formik.errors.passwordConfirmation
               : ""
           }
         />
@@ -165,8 +150,35 @@ export default function Register() {
           placeholder="Elige una opción"
         />
       </div>
+      <div className="flex justify-center flex-col items-center mt-4">
+        <label>
+          <input
+            name="terms"
+            type="checkbox"
+            checked={formik.values.terms}
+            onChange={(e) =>
+              formik.setFieldValue(e.target.name, e.target.checked)
+            }
+          />
+          Acepto los términos y condiciones
+        </label>
+        {formik.errors.terms && formik.touched?.terms && (
+          <span className="text-red-500 text-sm">{formik.errors.terms}</span>
+        )}
+        <label className="mt-2">
+          <input
+            name="newsletter"
+            type="checkbox"
+            checked={formik.values.newsletter}
+            onChange={(e) =>
+              formik.setFieldValue(e.target.name, e.target.checked)
+            }
+          />
+          Quiero recibir la newsletter
+        </label>
+      </div>
       <div className={"mt-4"}>
-        <RoundedButton type="submit">Enviar</RoundedButton>
+        <RoundedButton type="submit">Regístrate ahora</RoundedButton>
       </div>
     </form>
   );
