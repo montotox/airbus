@@ -22,7 +22,7 @@ export default function Loader({ message }: LoaderProps) {
     <div>
       <div className={loadingAnimationClasses}>
         <CiclogreenIcon width={130} height={130} />
-        <B2 fontWeight="font-semibold" color="mt-2 text-white-100">
+        <B2 fontWeight="font-semibold" color="mt-2 text-white-100 text-center">
           {message}
         </B2>
       </div>
