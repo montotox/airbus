@@ -160,7 +160,12 @@ export default function Register() {
               formik.setFieldValue(e.target.name, e.target.checked)
             }
           />
-          Acepto los términos y condiciones
+          <span>
+            He leído y acepto las{" "}
+            <a href="https://www.ciclogreen.com/terms" target="_blank">
+              Condiciones Particulares de Registro en Ciclogreen
+            </a>
+          </span>
         </label>
         {formik.errors.terms && formik.touched?.terms && (
           <span className="text-red-500 text-sm">{formik.errors.terms}</span>
@@ -174,7 +179,8 @@ export default function Register() {
               formik.setFieldValue(e.target.name, e.target.checked)
             }
           />
-          Quiero recibir la newsletter
+          Deseo estar inscrito en la Newsletter de Ciclogreen y recibir
+          comunicaciones comerciales por medios electrónicos
         </label>
       </div>
       <div className={"mt-4"}>
