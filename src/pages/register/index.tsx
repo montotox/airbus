@@ -150,7 +150,7 @@ export default function Register() {
           placeholder="Elige una opción"
         />
       </div>
-      <div className="flex justify-center flex-col items-center mt-4">
+      <div className="flex justify-center flex-col items-center mt-4 w-72">
         <label>
           <input
             name="terms"
@@ -160,7 +160,7 @@ export default function Register() {
               formik.setFieldValue(e.target.name, e.target.checked)
             }
           />
-          <span>
+          <span className="ml-2">
             He leído y acepto las{" "}
             <a href="https://www.ciclogreen.com/terms" target="_blank">
               Condiciones Particulares de Registro en Ciclogreen
@@ -179,8 +179,10 @@ export default function Register() {
               formik.setFieldValue(e.target.name, e.target.checked)
             }
           />
-          Deseo estar inscrito en la Newsletter de Ciclogreen y recibir
-          comunicaciones comerciales por medios electrónicos
+          <span className="ml-2">
+            Deseo estar inscrito en la Newsletter de Ciclogreen y recibir
+            comunicaciones comerciales por medios electrónicos
+          </span>
         </label>
       </div>
       <div className={"mt-4"}>
