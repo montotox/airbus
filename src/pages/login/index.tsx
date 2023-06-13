@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import { useRouter } from "next/router";
 import * as Yup from "yup";
 import Input from "@/components/Atoms/Input";
 import RoundedButton from "@/components/Atoms/Buttons/RoundedButton/RoundedButton";
 import { H2 } from "@/common/typography";
-import { redirect } from "next/dist/server/api-utils";
 
 export default function Login() {
   const router = useRouter();
@@ -33,14 +32,13 @@ export default function Login() {
     }),
     onSubmit: async (data) => {
       try {
-        const response = await fetch("api/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }).then((res) => res.json());
-        console.log(response);
+        // const response = await fetch("api/login", {
+        //   method: "POST",
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   },
+        //   body: JSON.stringify(data),
+        // }).then((res) => res.json());
         window.location.replace(
           "https://prod.api.cclgrn.com/dashboard/api/email/free_pass_user/"
         );

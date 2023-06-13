@@ -57,7 +57,6 @@ export default function Register() {
       }),
     }),
     onSubmit: async (data) => {
-      console.log(data);
       try {
         await registerUser(data);
       } catch (error) {
@@ -73,15 +72,6 @@ export default function Register() {
   ) => {
     formik.setFieldValue(name, option);
   };
-
-  console.log(
-    "formik.errors.cluster && formik.touched?.cluster: ",
-    formik.errors.cluster && formik.touched?.cluster
-  );
-  console.log("formik.errors.cluster: ", formik.errors.cluster);
-  console.log("formik.touched?.cluster: ", formik.touched?.cluster);
-
-  console.log("formik.errors: ", formik.errors);
 
   return (
     <form
@@ -163,7 +153,7 @@ export default function Register() {
           valueSelected={formik.values.cluster}
           onChangeSelect={onChangeSelected}
           type="string"
-          label="Selecciona tu cluster"
+          label="Selecciona tu sede"
           className="w-72 mt-4"
           onBlur={formik.handleBlur}
           error={
@@ -172,6 +162,7 @@ export default function Register() {
               : ""
           }
           isClearable
+          placeholder="Elige una opción"
         />
       </div>
       <div className={"mt-4"}>

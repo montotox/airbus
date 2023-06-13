@@ -9,9 +9,6 @@ import Loader from "@/components/Atoms/Loader";
 export default function Home() {
   const router = useRouter();
   const [email, setEmail] = useState("");
-
-  console.log(router.query);
-
   const [loading, setLoading] = useState(true);
   const [companyData, setCompanyData] = useState({});
 
@@ -20,10 +17,12 @@ export default function Home() {
   }, []);
 
   const getCompanyData = async () => {
-    const response = await fetch(
-      `https://prod.api.cclgrn.com/dashboard/api/companyinfo/?company=${router.query.company}`
-    );
-    setCompanyData(response);
+    try {
+      const response = await fetch(
+        `https://prod.api.cclgrn.com/dashboard/api/companyinfo/?company=${router.query.company}`
+      );
+      setCompanyData(response);
+    } catch (error) {}
     setLoading(false);
   };
 
@@ -41,7 +40,6 @@ export default function Home() {
         .required("Campo requerido"),
     }),
     onSubmit: async (data) => {
-      console.log(data);
       router.push(`/loading?email=${data.email}`);
     },
   });

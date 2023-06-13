@@ -48,8 +48,6 @@ const InputDropdown = ({
     );
   };
 
-  console.log(error);
-
   return (
     <div className={`relative flex w-full flex-col ${className}`}>
       <label>
