@@ -6,6 +6,6 @@ export default function Loading() {
   useUserStatus();
 
   return (
-    <Loader message="Revisa tu email, esperamos la validación para continuar..." />
+    <Loader message="Revisa la bandeja de entrada de tu email, necesitamos validar tu cuenta para continuar" />
   );
 }

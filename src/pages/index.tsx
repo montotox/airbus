@@ -34,13 +34,28 @@ export default function Home() {
       email: Yup.string()
         .email("Email inválido")
         .matches(
-          new RegExp(`@airbus.com$`),
+          new RegExp(`@gmail.com$`),
           "El email debe finalizar con @airbus.com"
         )
         .required("Campo requerido"),
     }),
     onSubmit: async (data) => {
-      router.push(`/loading?email=${data.email}`);
+      await fetch(
+        "https://prod.api.cclgrn.com/dashboard/api/email/email_validation/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: data.email,
+            company: router.query.company,
+          }),
+        }
+      );
+      router.push(
+        `/loading?email=${data.email}&company=${router.query.company}`
+      );
     },
   });
 

@@ -10,8 +10,11 @@ export interface RegisterDTO {
   first_name: string;
   password: string;
   company: string;
-  subgroup_name: string;
+  subgroup: string;
   user_data?: {};
+  company_terms?: boolean;
+  terms?: boolean;
+  newsletter?: boolean;
 }
 
 export interface Register {
@@ -20,7 +23,10 @@ export interface Register {
   passwordConfirmation?: string;
   firstName: string;
   company: string;
-  cluster: Cluster;
+  subgroup: Cluster;
+  companyTerms?: boolean;
+  terms?: boolean;
+  newsletter?: boolean;
 }
 
 export const registerResponse = (register: RegisterDTO) => {
@@ -29,7 +35,10 @@ export const registerResponse = (register: RegisterDTO) => {
     password: nullToEmpty(register.password),
     firstName: nullToEmpty(register.first_name),
     company: nullToEmpty(register.company),
-    cluster: nullToEmpty(register.subgroup_name),
+    subgroup: nullToEmpty(register.subgroup),
+    companyTerms: register.company_terms,
+    terms: register.terms,
+    newsletter: register.newsletter,
   };
   return formattedRegister;
 };
@@ -40,7 +49,10 @@ export const registerRequest = (register: Register) => {
     first_name: register.firstName,
     password: register.password,
     company: register.company,
-    subgroup_name: register.cluster.value,
+    subgroup: register.subgroup.value,
+    company_terms: register.companyTerms,
+    terms: register.terms,
+    newsletter: register.newsletter,
   };
   return apiFormatRegister;
 };

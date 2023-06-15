@@ -6,10 +6,11 @@ const useUserStatus = () => {
   const [dataReceived, setDataReceived] = useState(false);
   const router = useRouter();
   const email = router.query.email;
+  const company = router.query.company;
   const getEmailStatus = async () => {
     if (email) {
       const response = await fetch(
-        `https://ciclofargate-staticsfilesbucket-11a3qmi5fai9p.s3.amazonaws.com/uploads/styles/img/${email}`,
+        `https://prod.api.cclgrn.com/dashboard/api/email/check_validation/?email=${email}`,
         {
           method: "GET",
           headers: {
@@ -42,7 +43,7 @@ const useUserStatus = () => {
 
   if (dataReceived) {
     console.log("HAY DATA");
-    router.push("/register?email=" + email);
+    router.push(`/register?email=${email}&company=${company}`);
     // router.push("/login?email=" + email);
   }
 

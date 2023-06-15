@@ -35,8 +35,9 @@ export default function Register() {
       firstName: "",
       company: "",
       password: "",
-      cluster: { value: "", label: "" },
+      subgroup: { value: "", label: "" },
       terms: false,
+      companyTerms: false,
       newsletter: false,
     },
     validationSchema: Yup.object({
@@ -49,7 +50,7 @@ export default function Register() {
         .required("Campo requerido"),
       firstName: Yup.string().required("Campo requerido"),
       password: Yup.string().required("Campo requerido"),
-      cluster: Yup.object().shape({
+      subgroup: Yup.object().shape({
         value: Yup.string().required("Este campo es obligatorio"),
         label: Yup.string().required("Este campo es obligatorio"),
       }),
@@ -57,8 +58,13 @@ export default function Register() {
         [true],
         "Debes aceptar los términos y condiciones"
       ),
+      companyTerms: Yup.boolean().oneOf(
+        [true],
+        "Debes aceptar los términos legales de Airbus"
+      ),
     }),
     onSubmit: async (data) => {
+      console.log("data", data);
       try {
         await registerUser(data);
       } catch (error) {
@@ -74,6 +80,8 @@ export default function Register() {
   ) => {
     formik.setFieldValue(name, option);
   };
+
+  console.log(formik.values);
 
   return (
     <form
@@ -134,16 +142,16 @@ export default function Register() {
         />
         <InputDropdown
           optionList={optionList}
-          name="cluster"
-          valueSelected={formik.values.cluster}
+          name="subgroup"
+          valueSelected={formik.values.subgroup}
           onChangeSelect={onChangeSelected}
           type="string"
           label="Selecciona tu sede"
           className="w-72 mt-4"
           onBlur={formik.handleBlur}
           error={
-            formik.errors.cluster && formik.touched?.cluster
-              ? formik.errors.cluster.label
+            formik.errors.subgroup && formik.touched?.subgroup
+              ? formik.errors.subgroup.label
               : ""
           }
           isClearable
@@ -163,14 +171,35 @@ export default function Register() {
           <span className="ml-2">
             He leído y acepto las{" "}
             <a href="https://www.ciclogreen.com/terms" target="_blank">
-              Condiciones Particulares de Registro en Ciclogreen
+              <u>Condiciones Particulares de Registro en Ciclogreen</u>
             </a>
           </span>
         </label>
         {formik.errors.terms && formik.touched?.terms && (
-          <span className="text-red-500 text-sm">{formik.errors.terms}</span>
+          <span className="text-red-400 text-sm">{formik.errors.terms}</span>
         )}
-        <label className="mt-2">
+        <label className=" mt-4">
+          <input
+            name="companyTerms"
+            type="checkbox"
+            checked={formik.values.companyTerms}
+            onChange={(e) =>
+              formik.setFieldValue(e.target.name, e.target.checked)
+            }
+          />
+          <span className="ml-2">
+            He leído y acepto las{" "}
+            <a href="https://www.ciclogreen.com/terms" target="_blank">
+              <u>Condiciones Legales de Airbus</u>
+            </a>
+          </span>
+        </label>
+        {formik.errors.companyTerms && formik.touched?.companyTerms && (
+          <span className="text-red-400 text-sm">
+            {formik.errors.companyTerms}
+          </span>
+        )}
+        <label className=" mt-4">
           <input
             name="newsletter"
             type="checkbox"
