@@ -1,13 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { useRouter } from "next/router";
 import * as Yup from "yup";
 import Input from "@/components/Atoms/Input";
 import RoundedButton from "@/components/Atoms/Buttons/RoundedButton/RoundedButton";
 import { H2 } from "@/common/typography";
+import { toast } from "react-toastify";
 
 export default function Login() {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (router.query.email) {
@@ -21,29 +23,39 @@ export default function Login() {
       password: "",
     },
     validationSchema: Yup.object({
-      email: Yup.string()
-        .email("Email inválido")
-        .matches(
-          new RegExp(`@airbus.com$`),
-          "El email debe finalizar con @airbus.com"
-        )
-        .required("Campo requerido"),
+      // email: Yup.string()
+      //   .email("Email inválido")
+      //   .matches(
+      //     new RegExp(`@airbus.com$`),
+      //     "El email debe finalizar con @airbus.com"
+      //   )
+      //   .required("Campo requerido"),
       password: Yup.string().required("Campo requerido"),
     }),
     onSubmit: async (data) => {
       try {
-        // const response = await fetch("api/login", {
-        //   method: "POST",
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //   },
-        //   body: JSON.stringify(data),
-        // }).then((res) => res.json());
-        // window.location.replace(
-        //   "https://prod.api.cclgrn.com/dashboard/api/email/free_pass_user/?format=json"
-        // );
+        setLoading(true);
+        const response = await fetch(
+          "https://prod.api.cclgrn.com/api/auth/login/",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email: formik.values.email,
+              password: formik.values.password,
+            }),
+          }
+        ).then((res) => res.json());
+        if (response.key) {
+          window.location.replace(
+            `https://prod.api.cclgrn.com/dashboard/api/email/get_token_info/${response.key}/?format=json`
+          );
+        }
       } catch (error) {
-        console.log("Error de conexión", error);
+        setLoading(false);
+        toast.error("Error de conexión" + error);
       }
     },
   });

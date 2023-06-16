@@ -19,7 +19,7 @@ export default function Loader({ message }: LoaderProps) {
   );
 
   return (
-    <div>
+    <div className="w-9/12">
       <div className={loadingAnimationClasses}>
         <CiclogreenIcon width={130} height={130} />
         <B2 fontWeight="font-semibold" color="mt-2 text-white-100 text-center">

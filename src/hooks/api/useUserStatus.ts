@@ -1,9 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import { useState } from "react";
 
 const useUserStatus = () => {
-  const [dataReceived, setDataReceived] = useState(false);
   const router = useRouter();
   const email = router.query.email;
   const company = router.query.company;

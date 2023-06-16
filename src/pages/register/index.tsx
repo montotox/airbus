@@ -6,12 +6,13 @@ import Input from "@/components/Atoms/Input";
 import RoundedButton from "@/components/Atoms/Buttons/RoundedButton/RoundedButton";
 import { H2 } from "@/common/typography";
 import InputDropdown, { OptionType } from "@/components/Atoms/InputDropdown";
-import { registerUser } from "@/services/register";
 import { registerRequest } from "@/models/register";
+import { toast } from "react-toastify";
 
 export default function Register() {
   const router = useRouter();
   const [optionList, setOptionList] = useState<OptionType[]>([]);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     if (router.query.email) {
       formik.setFieldValue("email", router.query.email as string);
@@ -33,13 +34,13 @@ export default function Register() {
       conditions: true,
     },
     validationSchema: Yup.object({
-      email: Yup.string()
-        .email("Email inválido")
-        .matches(
-          new RegExp(`@gmail.com$`),
-          "El email debe finalizar con @airbus.com"
-        )
-        .required("Campo requerido"),
+      // email: Yup.string()
+      //   .email("Email inválido")
+      //   .matches(
+      //     new RegExp(`@airbus.com$`),
+      //     "El email debe finalizar con @airbus.com"
+      //   )
+      //   .required("Campo requerido"),
       firstName: Yup.string().required("Campo requerido"),
       password: Yup.string().required("Campo requerido"),
       subgroup: Yup.object().shape({
@@ -58,7 +59,7 @@ export default function Register() {
     onSubmit: async (data) => {
       const apiFormatData = registerRequest(data);
       try {
-        // const response = await registerUser(data);
+        setLoading(true);
         const response = await fetch(
           "https://prod.api.cclgrn.com/dashboard/api/email/create_user/",
           {
@@ -75,7 +76,8 @@ export default function Register() {
           );
         }
       } catch (error) {
-        console.log("Error de conexión", error);
+        setLoading(false);
+        toast.error("Error de conexión" + error);
       }
       router.push(`/login?email=${data.email}`);
     },
