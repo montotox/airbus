@@ -34,13 +34,13 @@ export default function Register() {
       conditions: true,
     },
     validationSchema: Yup.object({
-      // email: Yup.string()
-      //   .email("Email inválido")
-      //   .matches(
-      //     new RegExp(`@airbus.com$`),
-      //     "El email debe finalizar con @airbus.com"
-      //   )
-      //   .required("Campo requerido"),
+      email: Yup.string()
+        .email("Email inválido")
+        .matches(
+          new RegExp(`@airbus.com$`),
+          "El email debe finalizar con @airbus.com"
+        )
+        .required("Campo requerido"),
       firstName: Yup.string().required("Campo requerido"),
       password: Yup.string().required("Campo requerido"),
       subgroup: Yup.object().shape({
@@ -79,7 +79,6 @@ export default function Register() {
         setLoading(false);
         toast.error("Error de conexión" + error);
       }
-      router.push(`/login?email=${data.email}`);
     },
   });
 
@@ -217,7 +216,10 @@ export default function Register() {
           />
           <span className="ml-2">
             He leído y acepto las{" "}
-            <a href="https://www.ciclogreen.com/terms" target="_blank">
+            <a
+              href="https://ciclofargate-staticsfilesbucket-11a3qmi5fai9p.s3.eu-west-3.amazonaws.com/companies/airbus/termandconditions.html"
+              target="_blank"
+            >
               <u>Condiciones Legales de Airbus</u>
             </a>
           </span>

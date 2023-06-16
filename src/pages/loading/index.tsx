@@ -52,9 +52,9 @@ export default function Loading() {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <Loader message="Revisa la bandeja de entrada de tu email, necesitamos validar tu cuenta para continuar" />
+      <Loader message="Revisa la bandeja de entrada de tu email, necesitamos confirmar tu cuenta para continuar" />
       <RoundedButton type="submit" onClick={refetch} loading={loading}>
-        Ya validé mi email
+        Mail confirmado
       </RoundedButton>
     </div>
   );

@@ -31,21 +31,6 @@ export interface Register {
   conditions?: boolean;
 }
 
-export const registerResponse = (register: RegisterDTO) => {
-  const formattedRegister: Register = {
-    email: nullToEmpty(register.email),
-    password: nullToEmpty(register.password),
-    firstName: nullToEmpty(register.first_name),
-    company: nullToEmpty(register.company),
-    subgroup: nullToEmpty(register.subgroup),
-    companyTerms: register.company_terms,
-    terms: register.terms,
-    newsletter: register.newsletter,
-    conditions: register.conditions,
-  };
-  return formattedRegister;
-};
-
 export const registerRequest = (register: Register) => {
   const apiFormatRegister = {
     email: register.email,

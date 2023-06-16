@@ -14,15 +14,15 @@ export default function Home() {
     initialValues: {
       email: "",
     },
-    // validationSchema: Yup.object({
-    //   email: Yup.string()
-    //     .email("Email inválido")
-    //     .matches(
-    //       new RegExp(`@airbus.com$`),
-    //       "El email debe finalizar con @airbus.com"
-    //     )
-    //     .required("Campo requerido"),
-    // }),
+    validationSchema: Yup.object({
+      email: Yup.string()
+        .email("Email inválido")
+        .matches(
+          new RegExp(`@airbus.com$`),
+          "El email debe finalizar con @airbus.com"
+        )
+        .required("Campo requerido"),
+    }),
     onSubmit: async (data) => {
       try {
         setLoading(true);

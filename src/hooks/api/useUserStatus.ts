@@ -3,21 +3,19 @@ import { useRouter } from "next/router";
 
 const useUserStatus = () => {
   const router = useRouter();
-  const email = router.query.email;
+  const email = router.query.email as string;
   const company = router.query.company;
   const getEmailStatus = async () => {
     if (email) {
       const response = await fetch(
-        "https://prod.api.cclgrn.com/dashboard/api/email/email_validation/",
+        `https://prod.api.cclgrn.com/dashboard/api/email/check_validation/?email=${encodeURIComponent(
+          email
+        )}`,
         {
-          method: "POST",
+          method: "GET",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            email: router.query.email,
-            company: router.query.company,
-          }),
         }
       );
       const data = await response.json();
