@@ -103,7 +103,9 @@ export default function Login() {
         />
       </div>
       <div className={"mt-4"}>
-        <RoundedButton type="submit">Enviar</RoundedButton>
+        <RoundedButton type="submit" loading={loading}>
+          Enviar
+        </RoundedButton>
       </div>
     </form>
   );
