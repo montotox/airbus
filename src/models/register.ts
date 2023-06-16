@@ -15,6 +15,7 @@ export interface RegisterDTO {
   company_terms?: boolean;
   terms?: boolean;
   newsletter?: boolean;
+  conditions?: boolean;
 }
 
 export interface Register {
@@ -27,6 +28,7 @@ export interface Register {
   companyTerms?: boolean;
   terms?: boolean;
   newsletter?: boolean;
+  conditions?: boolean;
 }
 
 export const registerResponse = (register: RegisterDTO) => {
@@ -39,6 +41,7 @@ export const registerResponse = (register: RegisterDTO) => {
     companyTerms: register.company_terms,
     terms: register.terms,
     newsletter: register.newsletter,
+    conditions: register.conditions,
   };
   return formattedRegister;
 };
@@ -53,6 +56,7 @@ export const registerRequest = (register: Register) => {
     company_terms: register.companyTerms,
     terms: register.terms,
     newsletter: register.newsletter,
+    conditions: register.conditions,
   };
   return apiFormatRegister;
 };

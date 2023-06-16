@@ -6,7 +6,7 @@ export const registerUser = (register: Register) => {
   const apiFormatRegister = registerRequest(register);
   return {
     call: axios.post<RegisterDTO>(
-      "https://prod.api.cclgrn.com/dashboard/api/new_user/",
+      "https://prod.api.cclgrn.com/dashboard/api/email/create_user/",
       apiFormatRegister,
       {
         signal: controller.signal,

@@ -39,9 +39,9 @@ export default function Login() {
         //   },
         //   body: JSON.stringify(data),
         // }).then((res) => res.json());
-        window.location.replace(
-          "https://prod.api.cclgrn.com/dashboard/api/email/free_pass_user/?format=json"
-        );
+        // window.location.replace(
+        //   "https://prod.api.cclgrn.com/dashboard/api/email/free_pass_user/?format=json"
+        // );
       } catch (error) {
         console.log("Error de conexión", error);
       }

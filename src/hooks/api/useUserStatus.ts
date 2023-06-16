@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const useUserStatus = () => {
   const [dataReceived, setDataReceived] = useState(false);
@@ -10,18 +10,28 @@ const useUserStatus = () => {
   const getEmailStatus = async () => {
     if (email) {
       const response = await fetch(
-        `https://prod.api.cclgrn.com/dashboard/api/email/check_validation/?email=${email}`,
+        "https://prod.api.cclgrn.com/dashboard/api/email/email_validation/",
         {
-          method: "GET",
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
           },
+          body: JSON.stringify({
+            email: router.query.email,
+            company: router.query.company,
+          }),
         }
       );
       const data = await response.json();
-      console.log("HAGO LA LLAMADA");
-      console.log(data);
+      if (data.email_validated) {
+        if (data.user_exists) {
+          router.push(`/login?email=${email}&company=${company}`);
+        } else {
+          router.push(`/register?email=${email}&company=${company}`);
+        }
+      } else {
+        return data;
+      }
       return data;
     }
   };
@@ -33,21 +43,6 @@ const useUserStatus = () => {
       refetchOnWindowFocus: true,
     }
   );
-
-  useEffect(() => {
-    console.log("Se activa useEffect");
-    setTimeout(() => {
-      setDataReceived(true);
-    }, 5000);
-  }, []);
-
-  if (dataReceived) {
-    console.log("HAY DATA");
-    router.push(`/register?email=${email}&company=${company}`);
-    // router.push("/login?email=" + email);
-  }
-
-  console.log("dataReceived: ", dataReceived);
 
   return {
     isLoading,

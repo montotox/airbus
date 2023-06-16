@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { useRouter } from "next/router";
 import * as Yup from "yup";
@@ -7,25 +7,16 @@ import RoundedButton from "@/components/Atoms/Buttons/RoundedButton/RoundedButto
 import { H2 } from "@/common/typography";
 import InputDropdown, { OptionType } from "@/components/Atoms/InputDropdown";
 import { registerUser } from "@/services/register";
-
-const optionList = [
-  {
-    value: "1",
-    label: "1",
-  },
-  {
-    value: "2",
-    label: "2",
-  },
-];
+import { registerRequest } from "@/models/register";
 
 export default function Register() {
   const router = useRouter();
-
+  const [optionList, setOptionList] = useState<OptionType[]>([]);
   useEffect(() => {
     if (router.query.email) {
       formik.setFieldValue("email", router.query.email as string);
       formik.setFieldValue("company", router.query.company as string);
+      fetchSubgroups();
     }
   }, [router.query]);
 
@@ -39,12 +30,13 @@ export default function Register() {
       terms: false,
       companyTerms: false,
       newsletter: false,
+      conditions: true,
     },
     validationSchema: Yup.object({
       email: Yup.string()
         .email("Email inválido")
         .matches(
-          new RegExp(`@airbus.com$`),
+          new RegExp(`@gmail.com$`),
           "El email debe finalizar con @airbus.com"
         )
         .required("Campo requerido"),
@@ -64,9 +56,24 @@ export default function Register() {
       ),
     }),
     onSubmit: async (data) => {
-      console.log("data", data);
+      const apiFormatData = registerRequest(data);
       try {
-        await registerUser(data);
+        // const response = await registerUser(data);
+        const response = await fetch(
+          "https://prod.api.cclgrn.com/dashboard/api/email/create_user/",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(apiFormatData),
+          }
+        ).then((res) => res.json());
+        if (response.token) {
+          window.location.replace(
+            `https://prod.api.cclgrn.com/dashboard/api/email/get_token_info/${response.token}/?format=json`
+          );
+        }
       } catch (error) {
         console.log("Error de conexión", error);
       }
@@ -81,7 +88,26 @@ export default function Register() {
     formik.setFieldValue(name, option);
   };
 
-  console.log(formik.values);
+  const fetchSubgroups = async () => {
+    try {
+      const response = await fetch(
+        `https://prod.api.cclgrn.com/dashboard/api/email/get_company_info/?company_id=${router.query.company}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      ).then((res) => res.json());
+      const subgroups = response?.subgroups?.map((subgroup: any) => ({
+        value: subgroup.uuid,
+        label: subgroup.name,
+      }));
+      setOptionList(subgroups);
+    } catch (error) {
+      console.log("Error de conexión", error);
+    }
+  };
 
   return (
     <form
