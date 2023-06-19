@@ -36,10 +36,13 @@ export default function Register() {
     validationSchema: Yup.object({
       email: Yup.string()
         .email("Email inválido")
-        .matches(
-          new RegExp(`@airbus.com$`),
-          "El email debe finalizar con @airbus.com"
-        )
+        .test("email-airbus", "No está permitido ese correo", (value) => {
+          if (value && value.toLowerCase() === "external@airbus.com") {
+            return false;
+          }
+          return true;
+        })
+        .matches(/@airbus.com$/, "El email debe finalizar con @airbus.com")
         .required("Campo requerido"),
       firstName: Yup.string().required("Campo requerido"),
       password: Yup.string().required("Campo requerido"),
