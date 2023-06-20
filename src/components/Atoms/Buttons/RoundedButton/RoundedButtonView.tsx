@@ -27,10 +27,10 @@ const RoundedButtonView = ({
     "active:brightness-95",
     "justify-center",
     {
-      "bg-white": variant === ButtonVariants.SECONDARY,
+      "bg-transparent": variant === ButtonVariants.SECONDARY,
       "pointer-events-none opacity-80": disabled || loading,
-      "border border-blue-800": variant === ButtonVariants.SECONDARY,
-      "hover:bg-green-700": variant === ButtonVariants.SECONDARY,
+      "border border-white": variant === ButtonVariants.SECONDARY,
+      "hover:darkness-50": variant === ButtonVariants.SECONDARY,
     }
   );
   return (

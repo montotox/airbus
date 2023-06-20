@@ -27,35 +27,53 @@ export default function Home() {
         .required("Campo requerido"),
     }),
     onSubmit: async (data) => {
+      const email = formik.values.email as string;
       try {
         setLoading(true);
         const response = await fetch(
-          "https://prod.api.cclgrn.com/dashboard/api/email/email_validation/",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              email: formik.values.email,
-              company,
-            }),
-          }
-        ).then((res) => res.json());
-        if (response.email_validated) {
-          if (response.user_exists) {
-            router.push(
-              `/login?email=${formik.values.email}&company=${company}`
-            );
-          } else {
-            router.push(
-              `/register?email=${formik.values.email}&company=${company}`
-            );
+          `https://prod.api.cclgrn.com/dashboard/api/email/check_validation/?email=${encodeURIComponent(
+            email
+          )}`
+        );
+        if (response.status !== 200) {
+          if (response.status === 404) {
+            fetch(
+              `https://prod.api.cclgrn.com/dashboard/api/email/email_validation/`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  email: email,
+                  company: company,
+                }),
+              }
+            ).then((res) => {
+              if (res.status === 200) {
+                router.push(
+                  `/loading?email=${data.email}&company=${router.query.company}`
+                );
+              }
+            });
           }
         } else {
-          router.push(
-            `/loading?email=${data.email}&company=${router.query.company}`
-          );
+          const responseData = await response.json();
+          if (responseData.email_validated) {
+            if (responseData.user_exists) {
+              router.push(
+                `/login?email=${formik.values.email}&company=${company}`
+              );
+            } else {
+              router.push(
+                `/register?email=${formik.values.email}&company=${company}`
+              );
+            }
+          } else {
+            router.push(
+              `/loading?email=${data.email}&company=${router.query.company}`
+            );
+          }
         }
       } catch (error) {
         setLoading(false);
