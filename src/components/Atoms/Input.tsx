@@ -69,7 +69,7 @@ const Input = ({
     <div className={`${globalClass} ${className}`}>
       <label>
         {label && (
-          <B2 className="mb-1" color="text-slate-200" fontWeight="font-bold">
+          <B2 className="mb-1" color="text-[#01205A]" fontWeight="font-bold">
             {label}
           </B2>
         )}

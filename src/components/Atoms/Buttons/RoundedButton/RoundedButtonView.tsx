@@ -19,7 +19,7 @@ const RoundedButtonView = ({
   const btnClass = ClassNames(
     "flex",
     "items-center",
-    "bg-slate-100",
+    "bg-[#01205A]",
     "py-2",
     "px-6",
     "rounded-xl",
@@ -43,7 +43,7 @@ const RoundedButtonView = ({
     >
       <B1
         color={
-          variant === ButtonVariants.SECONDARY ? "text-white" : "text-blue-800"
+          variant === ButtonVariants.SECONDARY ? "text-white" : "text-white"
         }
         fontWeight="font-semibold"
       >

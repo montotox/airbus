@@ -54,7 +54,7 @@ const InputDropdown = ({
         {label && (
           <B2
             className="mb-1 select-none"
-            color="text-slate-200"
+            color="text-[#01205A]"
             fontWeight="font-bold"
           >
             {label}
