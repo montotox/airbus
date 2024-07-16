@@ -18,7 +18,7 @@ export default function Loading() {
   const refetch = async () => {
     setLoading2(true);
     const response = await fetch(
-      `https://prod.api.cclgrn.com/dashboard/api/email/check_validation/?email=${encodeURIComponent(
+      `https://prod-api.cclgrn.com/dashboard/api/email/check_validation/?email=${encodeURIComponent(
         email
       )}`
     );
@@ -48,7 +48,7 @@ export default function Loading() {
   const resend = async () => {
     setLoading(true);
     await fetch(
-      `https://prod.api.cclgrn.com/dashboard/api/email/email_validation/`,
+      `https://prod-api.cclgrn.com/dashboard/api/email/email_validation/`,
       {
         method: "POST",
         headers: {

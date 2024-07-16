@@ -31,14 +31,14 @@ export default function Home() {
       try {
         setLoading(true);
         const response = await fetch(
-          `https://prod.api.cclgrn.com/dashboard/api/email/check_validation/?email=${encodeURIComponent(
+          `https://prod-api.cclgrn.com/dashboard/api/email/check_validation/?email=${encodeURIComponent(
             email
           )}`
         );
         if (response.status !== 200) {
           if (response.status === 404) {
             fetch(
-              `https://prod.api.cclgrn.com/dashboard/api/email/email_validation/`,
+              `https://prod-api.cclgrn.com/dashboard/api/email/email_validation/`,
               {
                 method: "POST",
                 headers: {

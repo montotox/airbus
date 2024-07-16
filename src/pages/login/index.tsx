@@ -39,7 +39,7 @@ export default function Login() {
       try {
         setLoading(true);
         const response = await fetch(
-          "https://prod.api.cclgrn.com/api/auth/login/",
+          "https://prod-api.cclgrn.com/api/auth/login/",
           {
             method: "POST",
             headers: {
@@ -53,7 +53,7 @@ export default function Login() {
         ).then((res) => res.json());
         if (response.key) {
           window.location.replace(
-            `https://prod.api.cclgrn.com/dashboard/api/email/get_token_info/${response.key}/?format=json`
+            `https://prod-api.cclgrn.com/dashboard/api/email/get_token_info/${response.key}/?format=json`
           );
         }
       } catch (error) {

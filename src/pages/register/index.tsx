@@ -64,7 +64,7 @@ export default function Register() {
       try {
         setLoading(true);
         const response = await fetch(
-          "https://prod.api.cclgrn.com/dashboard/api/email/create_user/",
+          "https://prod-api.cclgrn.com/dashboard/api/email/create_user/",
           {
             method: "POST",
             headers: {
@@ -75,7 +75,7 @@ export default function Register() {
         ).then((res) => res.json());
         if (response.token) {
           window.location.replace(
-            `https://prod.api.cclgrn.com/dashboard/api/email/get_token_info/${response.token}/?format=json`
+            `https://prod-api.cclgrn.com/dashboard/api/email/get_token_info/${response.token}/?format=json`
           );
         }
       } catch (error) {
@@ -95,7 +95,7 @@ export default function Register() {
   const fetchSubgroups = async () => {
     try {
       const response = await fetch(
-        `https://prod.api.cclgrn.com/dashboard/api/email/get_company_info/?company_id=${router.query.company}`,
+        `https://prod-api.cclgrn.com/dashboard/api/email/get_company_info/?company_id=${router.query.company}`,
         {
           method: "GET",
           headers: {

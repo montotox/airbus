@@ -8,7 +8,7 @@ const useUserStatus = () => {
   const getEmailStatus = async () => {
     if (email) {
       const response = await fetch(
-        `https://prod.api.cclgrn.com/dashboard/api/email/check_validation/?email=${encodeURIComponent(
+        `https://prod-api.cclgrn.com/dashboard/api/email/check_validation/?email=${encodeURIComponent(
           email
         )}`,
         {
