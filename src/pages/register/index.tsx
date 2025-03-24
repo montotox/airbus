@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { useFormik } from "formik";
-import { useRouter } from "next/router";
-import * as Yup from "yup";
-import Input from "@/components/Atoms/Input";
-import RoundedButton from "@/components/Atoms/Buttons/RoundedButton/RoundedButton";
 import { H2 } from "@/common/typography";
+import RoundedButton from "@/components/Atoms/Buttons/RoundedButton/RoundedButton";
+import Input from "@/components/Atoms/Input";
 import InputDropdown, { OptionType } from "@/components/Atoms/InputDropdown";
 import { registerRequest } from "@/models/register";
+import { useFormik } from "formik";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import * as Yup from "yup";
 
 export default function Register() {
   const router = useRouter();
@@ -73,9 +73,9 @@ export default function Register() {
             body: JSON.stringify(apiFormatData),
           }
         ).then((res) => res.json());
-        if (response.token) {
+        if (response.access) {
           window.location.replace(
-            `https://prod-api.cclgrn.com/dashboard/api/email/get_token_info/${response.token}/?format=json`
+            `https://prod-api.cclgrn.com/dashboard/api/email/get_token_info/${response.access}/?format=json`
           );
         }
       } catch (error) {

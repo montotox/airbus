@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { H2 } from "@/common/typography";
+import RoundedButton from "@/components/Atoms/Buttons/RoundedButton/RoundedButton";
+import Input from "@/components/Atoms/Input";
 import { useFormik } from "formik";
 import { useRouter } from "next/router";
-import * as Yup from "yup";
-import Input from "@/components/Atoms/Input";
-import RoundedButton from "@/components/Atoms/Buttons/RoundedButton/RoundedButton";
-import { H2 } from "@/common/typography";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import * as Yup from "yup";
 
 export default function Login() {
   const router = useRouter();
@@ -51,9 +51,9 @@ export default function Login() {
             }),
           }
         ).then((res) => res.json());
-        if (response.key) {
+        if (response.access) {
           window.location.replace(
-            `https://prod-api.cclgrn.com/dashboard/api/email/get_token_info/${response.key}/?format=json`
+            `https://prod-api.cclgrn.com/dashboard/api/email/get_token_info/${response.access}/?format=json`
           );
         }
       } catch (error) {
