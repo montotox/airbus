@@ -73,10 +73,25 @@ export default function Register() {
             body: JSON.stringify(apiFormatData),
           }
         ).then((res) => res.json());
-        if (response.access) {
-          window.location.replace(
-            `https://prod-api.cclgrn.com/dashboard/api/email/get_token_info/${response.access}/?format=json`
-          );
+        if (response.token) {
+          const loginResponse = await fetch(
+            "https://prod-api.cclgrn.com/api/auth/login/",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                email: formik.values.email,
+                password: formik.values.password,
+              }),
+            }
+          ).then((res) => res.json());
+          if (loginResponse.access) {
+            window.location.replace(
+              `https://prod-api.cclgrn.com/dashboard/api/email/get_token_info/${loginResponse.access}/?format=json`
+            );
+          }
         }
       } catch (error) {
         setLoading(false);
@@ -200,7 +215,11 @@ export default function Register() {
           />
           <span className="ml-2">
             He leído y acepto las{" "}
-            <a href="https://www.ciclogreen.com/terms" target="_blank">
+            <a
+              href="https://www.ciclogreen.com/terms"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
               <u>Condiciones Particulares de Registro en Ciclogreen</u>
             </a>
           </span>
@@ -222,6 +241,7 @@ export default function Register() {
             <a
               href="https://ciclofargate-staticsfilesbucket-11a3qmi5fai9p.s3.eu-west-3.amazonaws.com/companies/airbus/termandconditions.html"
               target="_blank"
+              rel="noreferrer noopener"
             >
               <u>Condiciones Legales de Airbus</u>
             </a>
@@ -247,8 +267,10 @@ export default function Register() {
           </span>
         </label>
       </div>
-      <div className={"mt-4"}>
-        <RoundedButton type="submit">Regístrate ahora</RoundedButton>
+      <div className={"my-4"}>
+        <RoundedButton type="submit" loading={loading}>
+          Regístrate ahora
+        </RoundedButton>
       </div>
     </form>
   );
